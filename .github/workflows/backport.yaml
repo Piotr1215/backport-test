@@ -27,16 +27,18 @@ jobs:
           # 1) Grab raw PR body
           BODY_CONTENT="$(gh api "/repos/$REPO/pulls/$PR_NUMBER" | jq -r .body)"
 
-          # 2) Properly escape the content for JSON
-          # This handles newlines, quotes, and other special characters
+          # 2) Properly escape the content for JSON and sed
           ESCAPED_CONTENT=$(echo "$BODY_CONTENT" | jq -aRs .)
 
           # 3) Remove the surrounding quotes added by jq, as we'll be inserting into an already quoted string
           ESCAPED_CONTENT="${ESCAPED_CONTENT%\"}"
           ESCAPED_CONTENT="${ESCAPED_CONTENT#\"}"
 
-          # 4) Insert it between the existing quotes in .backportrc.json
-          perl -i -CS -pe "s/{{sourcePullRequest}}/$ESCAPED_CONTENT/g" .backportrc.json
+          # 4) Further escape special characters for sed
+          ESCAPED_CONTENT=$(echo "$ESCAPED_CONTENT" | sed 's/[\/&]/\\&/g')
+
+          # 5) Insert it between the existing quotes in .backportrc.json using sed
+          sed -i "s/{{sourcePullRequest}}/$ESCAPED_CONTENT/g" .backportrc.json
       
       - name: Backport Action
         uses: sorenlouv/backport-github-action@v9.5.1
