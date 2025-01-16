@@ -31,7 +31,7 @@ jobs:
           BODY_CONTENT_JSON="$(jq -Rs . <<< "$BODY_CONTENT")"
 
           # 3. Replace {{sourcePullRequest}} in .backportrc.json with the JSON-escaped body
-          perl -i -pe "s|\{\{sourcePullRequest\}\}|$BODY_CONTENT_JSON|g" .backportrc.json
+          perl -i -CS -pe "s~\{\{sourcePullRequest\}\}~$BODY_CONTENT_JSON~g" .backportrc.json
       
       - name: Backport Action
         uses: sorenlouv/backport-github-action@v9.5.1
