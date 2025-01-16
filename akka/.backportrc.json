@@ -1,0 +1,29 @@
+{
+  "repoOwner": "Piotr1215",
+  "repoName": "backport-test",
+  "commitConflicts": true,
+
+  "prDescription": "🔙 Backport from `{{sourceBranch}}` to `{{targetBranch}}`\n\nOriginal PR: #{{sourcePullRequest.number}}\n\n### Backported Commits:\n{{#each commits}}\n- {{shortSha this.sourceCommit.sha}} {{this.sourceCommit.message}}\n{{/each}}\n\n### Original PR Description:\n"Here is a complex markdown sample:
+
+```markdown
+# Testing Complex Markdown 🚀
+
+## Code Samples
+```
+
+| Feature | Status |
+|---------|--------|
+| Tables  | ✅     |
+| Lists   | ✅     |
+
+1. Some bullet
+2. Another line
+
+> And a blockquote
+
+This will test special characters, code fences, etc.
+
+"",
+
+  "targetBranchChoices": ["main", "6.3", "6.2", "6.1", "6.0"]
+}
