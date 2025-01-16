@@ -7,6 +7,8 @@
   // the branches available to backport to
   "targetBranchChoices": ["main", "6.3", "6.2", "6.1", "6.0"],
 
+  "prDescription": "🔙 Backport from `{{sourceBranch}}` to `{{targetBranch}}`\n\nOriginal PR: #{{sourcePullRequest.number}}\n\n### Backported Commits:\n{{#each commits}}\n- {{shortSha this.sourceCommit.sha}} {{this.sourceCommit.message}}\n{{/each}}\n\n### Original PR Description:\n{{sourcePullRequest.body}}",
+
   // Optional: Automatically detect which branches a pull request should be backported to based on the pull request labels.
   // In this case, adding the label "auto-backport-to-production" will backport the PR to the "production" branch
   "branchLabelMapping": {

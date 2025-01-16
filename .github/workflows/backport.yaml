@@ -14,18 +14,6 @@ jobs:
         uses: sorenlouv/backport-github-action@v9.5.1
         with:
           github_token: ${{ secrets.GH_ACCESS_TOKEN }}
-          pull_request_body: |
-            🔙 Backport from `{{sourceBranch}}` to `{{targetBranch}}`
-
-            Original PR: #${{ github.event.pull_request.number }}
-
-            ### Backported Commits:
-            {{#each commits}}
-            - {{shortSha this.sourceCommit.sha}} {{this.sourceCommit.message}}
-            {{/each}}
-
-            ### Original PR Description:
-            {{defaultPrDescription}}
           auto_backport_label_prefix: backport-to-
 
       - name: Info log
