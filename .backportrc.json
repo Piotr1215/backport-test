@@ -5,6 +5,8 @@
   "repoName": "backport-test",
   "commitConflicts": true,
 
+  "prDescription": "Backport of #{pullNumber} to {branch}\n\nOriginal PR description:\n\n{pullBody}",
+
   // the branches available to backport to
   "targetBranchChoices": ["main", "6.3", "6.2", "6.1", "6.0"]
 }
