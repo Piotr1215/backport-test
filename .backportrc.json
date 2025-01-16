@@ -5,7 +5,7 @@
   "repoName": "backport-test",
   "commitConflicts": true,
 
-  "prDescription": "Backport of #{pullNumber} to {branch}\n\nOriginal PR description:\n\n{pullBody}",
+  "prDescription": "🔙 Backport from `{{sourceBranch}}` to `{{targetBranch}}`\n\nOriginal PR: #{{sourcePullRequest.number}}\n\n### Backported Commits:\n{{#each commits}}\n- {{shortSha this.sourceCommit.sha}} {{this.sourceCommit.message}}\n{{/each}}\n\n### Original PR Description:\n{{sourcePullRequest.body}}",
 
   // the branches available to backport to
   "targetBranchChoices": ["main", "6.3", "6.2", "6.1", "6.0"]
