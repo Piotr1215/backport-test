@@ -25,7 +25,7 @@ jobs:
           REPO: ${{ github.repository }}
         run: |
           # 1) Grab raw PR body
-          BODY_CONTENT="$(gh api "/repos/$REPO/pulls/$PR_NUMBER" | jq .body)"
+          BODY_CONTENT="$(gh api "/repos/$REPO/pulls/$PR_NUMBER" | jq -r .body)"
 
           # 2) Convert to JSON (adds surrounding quotes), e.g. "Some text\nMore text"
           RAW_JSON="$(jq -Rs . <<< "$BODY_CONTENT")"
