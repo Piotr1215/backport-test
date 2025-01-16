@@ -25,13 +25,10 @@ jobs:
           REPO: ${{ github.repository }}
         run: |
           # 1) Grab raw PR body
-          BODY_CONTENT="$(gh api "/repos/$REPO/pulls/$PR_NUMBER" | jq -r .body)"
+          BODY_CONTENT="$(gh api "/repos/$REPO/pulls/$PR_NUMBER" | jq .body)"
 
           # 2) Convert to JSON (adds surrounding quotes), e.g. "Some text\nMore text"
           RAW_JSON="$(jq -Rs . <<< "$BODY_CONTENT")"
-
-          # 3) Strip leading/trailing quotes
-          STRIPPED_JSON="$(sed 's/^"//; s/"$//' <<< "$RAW_JSON")"
 
           # 4) Insert it between the existing quotes in .backportrc.json
           perl -i -CS -pe "s~{{sourcePullRequest}}~$STRIPPED_JSON~g" .backportrc.json
