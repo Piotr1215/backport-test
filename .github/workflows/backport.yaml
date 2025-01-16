@@ -24,19 +24,17 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           REPO: ${{ github.repository }}
         run: |
-          # 1) Get the raw PR body
+          # 1) Grab raw PR body
           BODY_CONTENT="$(gh api "/repos/$REPO/pulls/$PR_NUMBER" | jq -r .body)"
 
-          # 2) Convert it to a JSON string
+          # 2) Convert to JSON (adds surrounding quotes), e.g. "Some text\nMore text"
           RAW_JSON="$(jq -Rs . <<< "$BODY_CONTENT")"
-          # e.g. "Some text\nwith newlines..."
 
-          # 3) Remove the leading/trailing quotes from RAW_JSON
+          # 3) Strip leading/trailing quotes
           STRIPPED_JSON="$(sed 's/^"//; s/"$//' <<< "$RAW_JSON")"
-          # e.g. Some text\nwith newlines...
 
-          # 4) Insert it into .backportrc.json with Perl
-          perl -i -CS -pe "s~\{\{sourcePullRequest\}\}~$STRIPPED_JSON~g" .backportrc.json
+          # 4) Insert it between the existing quotes in .backportrc.json
+          perl -i -CS -pe "s~{{sourcePullRequest}}~$STRIPPED_JSON~g" .backportrc.json
       
       - name: Backport Action
         uses: sorenlouv/backport-github-action@v9.5.1
