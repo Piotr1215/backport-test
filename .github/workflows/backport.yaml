@@ -31,7 +31,7 @@ jobs:
           RAW_JSON="$(jq -Rs . <<< "$BODY_CONTENT")"
 
           # 4) Insert it between the existing quotes in .backportrc.json
-          perl -i -CS -pe "s~{{sourcePullRequest}}~$STRIPPED_JSON~g" .backportrc.json
+          perl -i -CS -pe "s~{{sourcePullRequest}}~$RAW_JSON~g" .backportrc.json
       
       - name: Backport Action
         uses: sorenlouv/backport-github-action@v9.5.1
