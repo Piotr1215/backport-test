@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Install GH CLI
         uses: dev-hanz-ops/install-gh-cli-action@v0.2.0
       - name: Fetch PR description and update backportrc
