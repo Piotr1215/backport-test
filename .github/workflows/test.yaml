@@ -1,0 +1,27 @@
+name: Test Push Event
+
+on:
+  push:
+    branches:
+      - main
+    
+jobs:
+  test-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # This ensures we get the full git history
+      
+      - name: Print event info
+        run: |
+          echo "Event name: ${{ github.event_name }}"
+          echo "Branch name: ${{ github.ref }}"
+          echo "Commit SHA: ${{ github.sha }}"
+          echo "Repository: ${{ github.repository }}"
+          
+      - name: Check if merged PR
+        run: |
+          echo "Is this from a PR merge? Let's check the commit message:"
+          git log -1 --pretty=format:"%s"
